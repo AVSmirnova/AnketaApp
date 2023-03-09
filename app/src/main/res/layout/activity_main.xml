@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Анкета пользователя"
+        android:layout_gravity="center"
+        android:layout_marginVertical="50dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAdd"
+        android:text="Добавить"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:onClick="BtnClick">
+    </Button>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnShow"
+        android:text="Просмотреть"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:onClick="BtnClick">
+    </Button>
+
+
+
+</LinearLayout>
