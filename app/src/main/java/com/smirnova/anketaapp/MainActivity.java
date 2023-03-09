@@ -11,6 +11,9 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnAdd,btnShow;
     Boolean showButtonPressed =false;
+
+    public static Anketa anketa= new Anketa();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,16 +32,13 @@ public class MainActivity extends AppCompatActivity {
     }
     public void BtnClick(View v){
         Intent intent;
-        if  (v.getId()==R.id.btnAdd) {
-            intent=new Intent(this,AddActivity.class);
-            startActivityForResult(intent,1);
-        }
-        else {
-            intent=new Intent(this,AddActivity.class);
+        if  (v.getId()==R.id.btnShow) {
             showButtonPressed = true;
-            intent.putExtra("SHOW", showButtonPressed);
-            startActivity(intent);
         }
+
+        intent=new Intent(this,AddActivity.class);
+        intent.putExtra("SHOW", showButtonPressed);
+        startActivity(intent);
 
 
     }
