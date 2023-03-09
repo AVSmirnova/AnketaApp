@@ -1,7 +1,7 @@
 package com.smirnova.anketaapp;
 
 public class Anketa {
-    String userName;
+    private String userName;
     String lastName;
     String phone;
     String site;

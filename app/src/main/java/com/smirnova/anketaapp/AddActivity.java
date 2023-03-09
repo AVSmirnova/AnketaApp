@@ -1,5 +1,7 @@
 package com.smirnova.anketaapp;
 
+import static com.smirnova.anketaapp.MainActivity.anketa;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -45,14 +47,25 @@ public class AddActivity extends AppCompatActivity {
                 btnSite.setVisibility(View.INVISIBLE);
                 btnAdress.setVisibility(View.INVISIBLE);
             }
+            else{
+                    etName.setText(anketa.getUserName());
+                    etLastName.setText(anketa.getLastName());
+                    etPhone.setText(anketa.getPhone());
+                    etSite.setText(anketa.getSite());
+                    etAdress.setText(anketa.getAdress());
+            }
 
         }
 
     }
     public void BtnSaveClick(View v){
 
-
-        Intent intent = new Intent();
+        anketa.setUserName(etName.getText().toString());
+        anketa.setLastName(etLastName.getText().toString());
+        anketa.setPhone(etPhone.getText().toString());
+        anketa.setSite(etSite.getText().toString());
+        anketa.setAdress(etAdress.getText().toString());
+//        Intent intent = new Intent();
         setResult(RESULT_OK);
         finish();
 
