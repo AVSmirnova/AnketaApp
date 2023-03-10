@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
-            Toast.makeText(this, "adsf",Toast.LENGTH_LONG).show();
+
             btnShow.setVisibility(View.VISIBLE);
             btnAdd.setVisibility(View.INVISIBLE);
         }

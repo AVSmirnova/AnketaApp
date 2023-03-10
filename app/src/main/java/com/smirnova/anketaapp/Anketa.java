@@ -16,18 +16,19 @@ public class Anketa {
         adress="";
     }
 
-  /*
-    public Anketa(String userName, String lastName, String phone, String site, String adress) {
+
+ /*   public Anketa(String userName, String lastName, String phone, String site, String adress) {
         this.userName = userName;
         this.lastName = lastName;
         this.phone = phone;
         this.site = site;
         this.adress = adress;
-    }*/
-
+    }
+*/
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }

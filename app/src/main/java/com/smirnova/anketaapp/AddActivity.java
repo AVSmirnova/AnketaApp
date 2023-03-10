@@ -5,6 +5,7 @@ import static com.smirnova.anketaapp.MainActivity.anketa;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +69,28 @@ public class AddActivity extends AppCompatActivity {
 //        Intent intent = new Intent();
         setResult(RESULT_OK);
         finish();
+
+    }
+    public void  BtnActionClick (View v){
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.btnSite:
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://"+ anketa.getSite()));
+                startActivity(intent);
+                break;
+            case R.id.btnAdress:
+                intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:"+ anketa.getAdress()));
+                startActivity(intent);
+                break;
+            case R.id.btnPhone:
+                intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+anketa.getPhone()));
+                startActivity(intent);
+                break;
+        }
+
 
     }
 }

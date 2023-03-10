@@ -13,4 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Button.Green" parent="Theme.AnketaApp">
+        <item name="colorPrimary">#10F52D</item>
+    </style>
 </resources>
