@@ -19,6 +19,7 @@ public class ListActivity extends AppCompatActivity {
 
     ListView listViewAnketa;
     TextView textViewHeader;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class ListActivity extends AppCompatActivity {
         listViewAnketa=findViewById(R.id.listViewAnketa);
         textViewHeader = findViewById(R.id.textViewHeader);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,
+        adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, profiles);
 
         listViewAnketa.setAdapter(adapter);
@@ -61,8 +62,11 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data!=null)
-             newAnketa = data.getParcelableExtra(Anketa.class.getSimpleName(),Anketa.class);
+        if (data!=null){
+             newAnketa = data.getParcelableExtra(Anketa.class.getSimpleName());
+             profiles.add(newAnketa);
+             adapter.notifyDataSetChanged();
+        }
 
 
     }
