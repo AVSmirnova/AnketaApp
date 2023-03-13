@@ -1,6 +1,9 @@
 package com.smirnova.anketaapp;
 
-public class Anketa {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Anketa implements Parcelable {
     private String userName;
     String lastName;
     String phone;
@@ -17,14 +20,34 @@ public class Anketa {
     }
 
 
- /*   public Anketa(String userName, String lastName, String phone, String site, String adress) {
-        this.userName = userName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.site = site;
-        this.adress = adress;
+    protected Anketa(Parcel in) {
+        userName = in.readString();
+        lastName = in.readString();
+        phone = in.readString();
+        site = in.readString();
+        adress = in.readString();
     }
-*/
+
+    public static final Creator<Anketa> CREATOR = new Creator<Anketa>() {
+        @Override
+        public Anketa createFromParcel(Parcel in) {
+            return new Anketa(in);
+        }
+
+        @Override
+        public Anketa[] newArray(int size) {
+            return new Anketa[size];
+        }
+    };
+
+    /*   public Anketa(String userName, String lastName, String phone, String site, String adress) {
+            this.userName = userName;
+            this.lastName = lastName;
+            this.phone = phone;
+            this.site = site;
+            this.adress = adress;
+        }
+    */
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -63,5 +86,21 @@ public class Anketa {
 
     public String getAdress() {
         return adress;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(userName);
+        parcel.writeString(lastName);
+        parcel.writeString(phone);
+        parcel.writeString(site);
+        parcel.writeString(adress);
+
+
     }
 }

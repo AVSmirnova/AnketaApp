@@ -1,6 +1,7 @@
 package com.smirnova.anketaapp;
 
-import static com.smirnova.anketaapp.MainActivity.anketa;
+
+import static com.smirnova.anketaapp.MainActivity.profiles;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,7 +42,16 @@ public class AddActivity extends AppCompatActivity {
 
 
         Bundle arguments=getIntent().getExtras();
+
         if(arguments!=null){
+            Boolean action = arguments.getBoolean("ADD");
+            if (action) {
+                btnPhone.setVisibility(View.INVISIBLE);
+                btnSite.setVisibility(View.INVISIBLE);
+                btnAdress.setVisibility(View.INVISIBLE);
+            }
+
+       /* if(arguments!=null){
             Boolean choose = arguments.getBoolean("SHOW");
             if (!choose) {
                 btnPhone.setVisibility(View.INVISIBLE);
@@ -54,25 +64,27 @@ public class AddActivity extends AppCompatActivity {
                     etPhone.setText(anketa.getPhone());
                     etSite.setText(anketa.getSite());
                     etAdress.setText(anketa.getAdress());
-            }
+            }*/
 
         }
 
     }
     public void BtnSaveClick(View v){
-
+        Anketa anketa =new Anketa();
         anketa.setUserName(etName.getText().toString());
         anketa.setLastName(etLastName.getText().toString());
         anketa.setPhone(etPhone.getText().toString());
         anketa.setSite(etSite.getText().toString());
         anketa.setAdress(etAdress.getText().toString());
-//        Intent intent = new Intent();
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtra(Anketa.class.getSimpleName(),anketa);
+
+        setResult(RESULT_OK, intent);
         finish();
 
     }
     public void  BtnActionClick (View v){
-        Intent intent;
+      /*  Intent intent;
         switch (v.getId()) {
             case R.id.btnSite:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://"+ anketa.getSite()));
@@ -89,7 +101,7 @@ public class AddActivity extends AppCompatActivity {
                 intent.setData(Uri.parse("tel:"+anketa.getPhone()));
                 startActivity(intent);
                 break;
-        }
+        }*/
 
 
     }

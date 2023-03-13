@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AnketaApp</string>
+    <string name="spisok">Анкеты пользователей</string>
+    <string name="error">тут пока нет ни одной анкеты</string>
 </resources>
