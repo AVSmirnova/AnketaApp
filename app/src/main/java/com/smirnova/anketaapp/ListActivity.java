@@ -20,11 +20,13 @@ import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
 
+    public static final int ADD_VIEW=1;
+    public static final int DEL_VIEW=2;
 
     ListView listViewAnketa;
     TextView textViewHeader;
     ArrayAdapter<String> adapter;
-    ArrayList<String> listFam;
+    public static ArrayList<String> listFam;
     int position=-1;
 
     @Override
@@ -47,7 +49,7 @@ public class ListActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),AddActivity.class);
                 intent.putExtra("ADD",false);
                 intent.putExtra(Anketa.class.getSimpleName(),profiles.get(i));
-                startActivityForResult(intent,1 );
+                startActivityForResult(intent,ADD_VIEW );
             }
         });
 
@@ -68,11 +70,18 @@ public class ListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent  intent;
         switch (item.getItemId()){
             case R.id.optionAdd:
-              Intent  intent=new Intent(this,AddActivity.class);
+              intent=new Intent(this,AddActivity.class);
               intent.putExtra("ADD", true );
-              startActivityForResult(intent,1 );
+              startActivityForResult(intent,ADD_VIEW );
+              break;
+            case R.id.optionalDel:
+               intent=new Intent(this,DeleteActivity.class);
+
+                startActivityForResult(intent,DEL_VIEW );
+                break;
         }
 
         return super.onOptionsItemSelected(item);
