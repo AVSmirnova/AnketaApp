@@ -24,7 +24,8 @@ public class AddActivity extends AppCompatActivity {
     Button btnAdress;
     Button btnSave;
 
-    Boolean saveStatus =false;
+    Boolean action;
+    Anketa anketa =new Anketa();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,37 +41,31 @@ public class AddActivity extends AppCompatActivity {
         btnAdress=findViewById(R.id.btnAdress);
         btnSave=findViewById(R.id.btnSave);
 
-
         Bundle arguments=getIntent().getExtras();
 
         if(arguments!=null){
-            Boolean action = arguments.getBoolean("ADD");
+            action = arguments.getBoolean("ADD");
             if (action) {
                 btnPhone.setVisibility(View.INVISIBLE);
                 btnSite.setVisibility(View.INVISIBLE);
                 btnAdress.setVisibility(View.INVISIBLE);
             }
-
-       /* if(arguments!=null){
-            Boolean choose = arguments.getBoolean("SHOW");
-            if (!choose) {
-                btnPhone.setVisibility(View.INVISIBLE);
-                btnSite.setVisibility(View.INVISIBLE);
-                btnAdress.setVisibility(View.INVISIBLE);
-            }
             else{
-                    etName.setText(anketa.getUserName());
-                    etLastName.setText(anketa.getLastName());
-                    etPhone.setText(anketa.getPhone());
-                    etSite.setText(anketa.getSite());
-                    etAdress.setText(anketa.getAdress());
-            }*/
+                anketa=arguments.getParcelable(Anketa.class.getSimpleName());
+                etName.setText(anketa.getUserName());
+                etLastName.setText(anketa.getLastName());
+                etPhone.setText(anketa.getPhone());
+                etSite.setText(anketa.getSite());
+                etAdress.setText(anketa.getAdress());
+            }
+
+
 
         }
 
     }
     public void BtnSaveClick(View v){
-        Anketa anketa =new Anketa();
+
         anketa.setUserName(etName.getText().toString());
         anketa.setLastName(etLastName.getText().toString());
         anketa.setPhone(etPhone.getText().toString());
@@ -78,13 +73,18 @@ public class AddActivity extends AppCompatActivity {
         anketa.setAdress(etAdress.getText().toString());
         Intent intent = new Intent();
         intent.putExtra(Anketa.class.getSimpleName(),anketa);
-
+        if(action) {
         setResult(RESULT_OK, intent);
+        }
+        else{
+            setResult(RESULT_CANCELED, intent);
+        }
+
         finish();
 
     }
     public void  BtnActionClick (View v){
-      /*  Intent intent;
+        Intent intent;
         switch (v.getId()) {
             case R.id.btnSite:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://"+ anketa.getSite()));
@@ -101,7 +101,7 @@ public class AddActivity extends AppCompatActivity {
                 intent.setData(Uri.parse("tel:"+anketa.getPhone()));
                 startActivity(intent);
                 break;
-        }*/
+        }
 
 
     }

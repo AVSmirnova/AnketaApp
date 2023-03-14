@@ -10,9 +10,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -20,6 +24,8 @@ public class ListActivity extends AppCompatActivity {
     ListView listViewAnketa;
     TextView textViewHeader;
     ArrayAdapter<String> adapter;
+    ArrayList<String> listFam;
+    int position=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +34,28 @@ public class ListActivity extends AppCompatActivity {
 
         listViewAnketa=findViewById(R.id.listViewAnketa);
         textViewHeader = findViewById(R.id.textViewHeader);
+        listFam=new ArrayList<String>();
 
         adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, profiles);
+                android.R.layout.simple_list_item_1, listFam);
 
         listViewAnketa.setAdapter(adapter);
+        listViewAnketa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                position=i;
+                Intent intent = new Intent(getApplicationContext(),AddActivity.class);
+                intent.putExtra("ADD",false);
+                intent.putExtra(Anketa.class.getSimpleName(),profiles.get(i));
+                startActivityForResult(intent,1 );
+            }
+        });
+
 
         if (!profiles.isEmpty()){
         textViewHeader.setText(getResources().getString(R.string.spisok));
         }
+
 
     }
 
@@ -63,11 +82,25 @@ public class ListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data!=null){
-             newAnketa = data.getParcelableExtra(Anketa.class.getSimpleName());
-             profiles.add(newAnketa);
+            newAnketa = data.getParcelableExtra(Anketa.class.getSimpleName());
+            if (resultCode==RESULT_OK) {
+                profiles.add(newAnketa);
+                listFam.add(newAnketa.getLastName());
+
+                textViewHeader.setText(getResources().getString(R.string.spisok));
+            }
+            if (resultCode==RESULT_CANCELED){
+               profiles.set(position,newAnketa);
+               listFam.set(position,newAnketa.getLastName());
+
+            }
+
              adapter.notifyDataSetChanged();
         }
 
 
     }
+
+
+
 }
