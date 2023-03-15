@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +16,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -33,6 +37,10 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         listViewAnketa=findViewById(R.id.listViewAnketa);
         textViewHeader = findViewById(R.id.textViewHeader);
@@ -58,7 +66,18 @@ public class ListActivity extends AppCompatActivity {
         textViewHeader.setText(getResources().getString(R.string.spisok));
         }
 
-
+        profiles.add(new Anketa("","f1","","",""));
+        listFam.add(profiles.get(0).lastName);
+        profiles.add(new Anketa("","f2","","",""));
+        listFam.add(profiles.get(1).lastName);
+        profiles.add(new Anketa("","f3","","",""));
+        listFam.add(profiles.get(2).lastName);
+        profiles.add(new Anketa("","f4","","",""));
+        listFam.add(profiles.get(3).lastName);
+        profiles.add(new Anketa("","f5","","",""));
+        listFam.add(profiles.get(4).lastName);
+        profiles.add(new Anketa("","f6","","",""));
+        listFam.add(profiles.get(5).lastName);
     }
 
     @Override
@@ -91,8 +110,10 @@ public class ListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data!=null){
+            if(requestCode==ADD_VIEW){
             newAnketa = data.getParcelableExtra(Anketa.class.getSimpleName());
             if (resultCode==RESULT_OK) {
+
                 profiles.add(newAnketa);
                 listFam.add(newAnketa.getLastName());
 
@@ -103,6 +124,27 @@ public class ListActivity extends AppCompatActivity {
                listFam.set(position,newAnketa.getLastName());
 
             }
+            }
+            if(requestCode==DEL_VIEW){
+                ArrayList<Integer> deleteList = data.getIntegerArrayListExtra("DELETE") ;
+                if (deleteList!=null) {
+                    Collections.sort(deleteList);
+                    Collections.reverse(deleteList);
+                    for (int position : deleteList
+                    ) {
+                        Log.d("tag",String.valueOf(position));
+                        profiles.remove(position);
+                        listFam.remove(position);
+
+                    }
+                }
+                else{
+                    Log.d("tag","null");
+                }
+
+
+            }
+
 
              adapter.notifyDataSetChanged();
         }
