@@ -80,7 +80,7 @@ public class ListActivity extends AppCompatActivity {
 
     }
     private void initData(){
-        String fio="";
+
         profiles.add(new Anketa("Андрей","Петров","","",""));
         profiles.add(new Anketa("Максим","Иванов","","",""));
         profiles.add(new Anketa("Никита","Сидоров","","",""));
@@ -89,15 +89,20 @@ public class ListActivity extends AppCompatActivity {
         profiles.add(new Anketa("","Румянцев","","",""));
         for (Anketa user:profiles
              ) {
-            if(user.getUserName()!=""){
-                fio=user.getLastName()+" "+user.getUserName().charAt(0)+".";
-            }
-            else{
-                fio=user.getLastName();
-            }
-            listFam.add(fio);
+            ;
+            listFam.add(setNameLetter(user));
         }
 
+    }
+    private String setNameLetter(Anketa user){
+        String fio="";
+        if(user.getUserName()!="" && user.getUserName().length()!=0){
+            fio=user.getLastName()+" "+user.getUserName().charAt(0)+".";
+        }
+        else{
+            fio=user.getLastName();
+        }
+        return  fio;
     }
 
     @Override
@@ -135,13 +140,12 @@ public class ListActivity extends AppCompatActivity {
             if (resultCode==RESULT_OK) {
 
                 profiles.add(newAnketa);
-                listFam.add(newAnketa.getLastName());
-
+                listFam.add(setNameLetter(newAnketa));
                 textViewHeader.setText(getResources().getString(R.string.spisok));
             }
             if (resultCode==RESULT_CANCELED){
                profiles.set(position,newAnketa);
-               listFam.set(position,newAnketa.getLastName());
+               listFam.set(position,setNameLetter(newAnketa));
 
             }
             }
@@ -162,11 +166,12 @@ public class ListActivity extends AppCompatActivity {
                     Log.d("tag","null");
                 }
 
-
+                adapter.notifyDataSetChanged();
             }
+            else  Log.d("tag","datanull");
 
 
-             adapter.notifyDataSetChanged();
+
         }
 
 
