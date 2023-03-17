@@ -38,9 +38,9 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+       /* getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);*/
 
         listViewAnketa=findViewById(R.id.listViewAnketa);
         textViewHeader = findViewById(R.id.textViewHeader);
@@ -60,24 +60,44 @@ public class ListActivity extends AppCompatActivity {
                 startActivityForResult(intent,ADD_VIEW );
             }
         });
-
+        initData();
+       /* profiles.add(new Anketa("Андрей","Петров","","",""));
+        listFam.add(profiles.get(0).lastName);
+        profiles.add(new Anketa("Максим","Иванов","","",""));
+        listFam.add(profiles.get(1).lastName);
+        profiles.add(new Anketa("Никита","Сидоров","","",""));
+        listFam.add(profiles.get(2).lastName);
+        profiles.add(new Anketa("Петр","Кузнецов","","",""));
+        listFam.add(profiles.get(3).lastName);
+        profiles.add(new Anketa("Евгений","Васильев","","",""));
+        listFam.add(profiles.get(4).lastName);
+        profiles.add(new Anketa("","Румянцев","","",""));
+        listFam.add(profiles.get(5).lastName);*/
 
         if (!profiles.isEmpty()){
-        textViewHeader.setText(getResources().getString(R.string.spisok));
+            textViewHeader.setText(getResources().getString(R.string.spisok));
         }
 
-        profiles.add(new Anketa("","f1","","",""));
-        listFam.add(profiles.get(0).lastName);
-        profiles.add(new Anketa("","f2","","",""));
-        listFam.add(profiles.get(1).lastName);
-        profiles.add(new Anketa("","f3","","",""));
-        listFam.add(profiles.get(2).lastName);
-        profiles.add(new Anketa("","f4","","",""));
-        listFam.add(profiles.get(3).lastName);
-        profiles.add(new Anketa("","f5","","",""));
-        listFam.add(profiles.get(4).lastName);
-        profiles.add(new Anketa("","f6","","",""));
-        listFam.add(profiles.get(5).lastName);
+    }
+    private void initData(){
+        String fio="";
+        profiles.add(new Anketa("Андрей","Петров","","",""));
+        profiles.add(new Anketa("Максим","Иванов","","",""));
+        profiles.add(new Anketa("Никита","Сидоров","","",""));
+        profiles.add(new Anketa("Петр","Кузнецов","","",""));
+        profiles.add(new Anketa("Евгений","Васильев","","",""));
+        profiles.add(new Anketa("","Румянцев","","",""));
+        for (Anketa user:profiles
+             ) {
+            if(user.getUserName()!=""){
+                fio=user.getLastName()+" "+user.getUserName().charAt(0)+".";
+            }
+            else{
+                fio=user.getLastName();
+            }
+            listFam.add(fio);
+        }
+
     }
 
     @Override
