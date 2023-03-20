@@ -5,9 +5,12 @@ import static com.smirnova.anketaapp.MainActivity.profiles;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements  SearchView.OnQueryTextListener{
 
     public static final int ADD_VIEW=1;
     public static final int DEL_VIEW=2;
@@ -77,6 +80,7 @@ public class ListActivity extends AppCompatActivity {
         if (!profiles.isEmpty()){
             textViewHeader.setText(getResources().getString(R.string.spisok));
         }
+        listViewAnketa.setTextFilterEnabled(true);
 
     }
     private void initData(){
@@ -85,8 +89,8 @@ public class ListActivity extends AppCompatActivity {
         profiles.add(new Anketa("Максим","Иванов","","",""));
         profiles.add(new Anketa("Никита","Сидоров","","",""));
         profiles.add(new Anketa("Петр","Кузнецов","","",""));
-        profiles.add(new Anketa("Евгений","Васильев","","",""));
-        profiles.add(new Anketa("","Румянцев","","",""));
+        profiles.add(new Anketa("Евгений","Vasilev","","",""));
+        profiles.add(new Anketa("","Rumyancev","","",""));
         for (Anketa user:profiles
              ) {
             ;
@@ -109,8 +113,22 @@ public class ListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option_add_menu, menu);
 
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        setupSearchView(searchView);
+
+
         return super.onCreateOptionsMenu(menu);
     }
+    private void setupSearchView(SearchView mSearchView) {
+        Log.d("tagg","true");
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setOnQueryTextListener(this);
+
+        mSearchView.setQueryHint("Search Sender");
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -178,5 +196,27 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
 
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        ArrayList<String> filtrFam= new ArrayList<String>();
+
+
+            for (String fam : listFam
+            ) {
+                if (fam.toLowerCase().contains(newText.toLowerCase())) {
+                    filtrFam.add(fam);
+                }
+
+            }
+
+        ArrayAdapter<String> adapter =new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1, filtrFam);
+        listViewAnketa.setAdapter(adapter);
+
+        return false;
+    }
 }
