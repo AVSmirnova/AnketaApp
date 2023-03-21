@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,8 +34,10 @@ public class ListActivity extends AppCompatActivity implements  SearchView.OnQue
     ListView listViewAnketa;
     TextView textViewHeader;
     ArrayAdapter<String> adapter;
+    Anketa newAnketa;
     public static ArrayList<String> listFam;
     int position=-1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,10 @@ public class ListActivity extends AppCompatActivity implements  SearchView.OnQue
         }
         listViewAnketa.setTextFilterEnabled(true);
 
+        registerForContextMenu(listViewAnketa);
+
+
+
     }
     private void initData(){
 
@@ -125,7 +132,6 @@ public class ListActivity extends AppCompatActivity implements  SearchView.OnQue
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setSubmitButtonEnabled(true);
         mSearchView.setOnQueryTextListener(this);
-
         mSearchView.setQueryHint("Search Sender");
     }
 
@@ -148,7 +154,29 @@ public class ListActivity extends AppCompatActivity implements  SearchView.OnQue
 
         return super.onOptionsItemSelected(item);
     }
-    Anketa newAnketa;
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.context_menu, menu);
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.optionDelete:
+                profiles.remove(position);
+                listFam.remove(position);
+                adapter.notifyDataSetChanged();
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

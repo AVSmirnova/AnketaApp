@@ -27,6 +27,7 @@ public class DeleteActivity extends AppCompatActivity {
     ArrayList<Integer> deleteList = new ArrayList<Integer>() ;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class DeleteActivity extends AppCompatActivity {
          switch (item.getItemId()){
             case R.id.home:
                 finish();
+                break;
             case R.id.optionDelete:
                 Intent intent = new Intent();
                 intent.putExtra("DELETE",deleteList );
